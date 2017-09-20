@@ -1,12 +1,12 @@
 'use strict';
 
-import templates from './<%= componentName %>.soy.js';
+import templates from './clay-<%= repoName %>.soy.js';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-class <%= componentName %> extends Component {
+class Clay<%= componentName %> extends Component {
 }
-Soy.register(<%= componentName %>, templates);
+Soy.register(Clay<%= componentName %>, templates);
 
-export { <%= componentName %> };
-export default <%= componentName %>;
+export { Clay<%= componentName %> };
+export default Clay<%= componentName %>;

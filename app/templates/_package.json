@@ -1,15 +1,16 @@
 {
-  "name": "<%= repoName %>",
+  "name": "clay-<%= repoName %>",
   "version": "0.0.0",
-  "description": "<%= repoDescription %>",
+  "description": "Metal Clay <%= componentName %> component",
   "license": "BSD",
   "repository": "metal/metal-clay-components",
   "engines": {
     "node": ">=0.12.0",
     "npm": ">=3.0.0"
   },
-  "main": "lib/<%= componentName %>.js",
-  "jsnext:main": "src/<%= componentName %>.js",
+  "main": "lib/clay-<%= repoName %>.js",
+  "esnext:main": "src/clay-<%= repoName %>.js",
+  "jsnext:main": "src/clay-<%= repoName %>.js",
   "files": [
     "lib",
     "src",

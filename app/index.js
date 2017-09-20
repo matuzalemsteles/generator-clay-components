@@ -19,7 +19,7 @@ module.exports = yeoman.generators.Base.extend({
 			type: 'input',
 			name: 'componentName',
 			message: 'How do you want to name your class?',
-			default: 'ClayBadge',
+			default: 'Badge',
 			validate: function(input) {
 				if (!input) {
 					return 'You must provide a class name.';
@@ -31,23 +31,6 @@ module.exports = yeoman.generators.Base.extend({
 				}
 
 				return true;
-			}
-		},
-		{
-			type: 'list',
-			name: 'superClass',
-			message: 'What do you want your class to extend from?',
-			choices: ['Component'],
-			default: 'Component'
-		},
-		{
-			type: 'list',
-			name: 'templateLanguage',
-			message: 'Which template language do you want to use?',
-			choices: ['Soy'],
-			default: 'Soy',
-			when: function(props) {
-				return props.superClass === 'Component';
 			}
 		},
 		{
@@ -76,25 +59,6 @@ module.exports = yeoman.generators.Base.extend({
 			name: 'isNodeModule',
 			message: 'Is this component supposed to run on node environment? (that is, should other modules be able to "require" and use it?)',
 			default: false
-		},
-		{
-			type: 'input',
-			name: 'repoOwner',
-			message: 'What\'s the GitHub username?',
-			default: 'my-user',
-			validate: function(input) {
-				if (!input) {
-					return 'You must provide a GitHub username.';
-				}
-
-				return true;
-			}
-		},
-		{
-			type: 'input',
-			name: 'repoDescription',
-			message: 'How would you describe this project?',
-			default: 'Metal Clay Badge component.'
 		}];
 
 		this.prompt(prompts, function (props) {
@@ -108,10 +72,7 @@ module.exports = yeoman.generators.Base.extend({
 			this.testEnviroment = props.testEnviroment;
 			this.isNodeModule = props.isNodeModule;
 			this.repoName = this.kebabCaseName;
-			this.repoOwner = props.repoOwner;
-			this.repoDescription = props.repoDescription;
 			this.buildFormat = props.buildFormat;
-			this.superClass = props.superClass;
 			this.templateLanguage = props.templateLanguage || 'None';
 
 			done();
@@ -119,38 +80,31 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	writing: function () {
-		this.destinationRoot(this.repoName);
+		this.destinationRoot('clay-' + this.repoName);
 
 		var demoTemplateName = 'demos/_index.html';
-		if (this.superClass === 'Component') {
+
+		this.fs.copyTpl(
+			this.templatePath(demoTemplateName), this.destinationPath('demos/index.html'),
+			{
+				camelCaseName: this.camelCaseName,
+				componentName: this.componentName,
+				capitalizeName: this.capitalizeName,
+				kebabCaseName: this.kebabCaseName,
+				repoName: this.repoName
+			}
+		);
+		if (this.templateLanguage === 'Soy') {
 			this.fs.copyTpl(
-				this.templatePath(demoTemplateName), this.destinationPath('demos/index.html'),
+				this.templatePath('src/_Boilerplate.soy'), this.destinationPath('src/clay-' + this.repoName + '.soy'),
 				{
-					camelCaseName: this.camelCaseName,
 					componentName: this.componentName,
-					capitalizeName: this.capitalizeName,
-					kebabCaseName: this.kebabCaseName,
-					repoName: this.repoName
-				}
-			);
-			this.fs.copyTpl(
-				this.templatePath('src/_boilerplate.scss'), this.destinationPath('src/' + this.kebabCaseName + '.scss'),
-				{
 					kebabCaseName: this.kebabCaseName
 				}
 			);
-			if (this.templateLanguage === 'Soy') {
-				this.fs.copyTpl(
-					this.templatePath('src/_Boilerplate.soy'), this.destinationPath('src/' + this.componentName + '.soy'),
-					{
-						componentName: this.componentName,
-						kebabCaseName: this.kebabCaseName
-					}
-				);
-			}
 		}
 		this.fs.copyTpl(
-			this.templatePath('src/_Boilerplate' + this.superClass + '.js'), this.destinationPath('src/' + this.componentName + '.js'),
+			this.templatePath('src/_BoilerplateComponent.js'), this.destinationPath('src/clay-' + this.repoName + '.js'),
 			{
 				buildFormat: this.buildFormat,
 				componentName: this.componentName,
@@ -159,7 +113,7 @@ module.exports = yeoman.generators.Base.extend({
 			}
 		);
 		this.fs.copyTpl(
-			this.templatePath('src/__tests__/_Boilerplate.js'), this.destinationPath('src/__tests__/' + this.componentName + '.js'),
+			this.templatePath('src/__tests__/_Boilerplate.js'), this.destinationPath('src/__tests__/clay-' + this.repoName + '.js'),
 			{
 				componentName: this.componentName,
 				testEnviroment: this.testEnviroment
@@ -168,12 +122,11 @@ module.exports = yeoman.generators.Base.extend({
 		this.fs.copyTpl(
 			this.templatePath('_package.json'), this.destinationPath('package.json'),
 			{
+				kebabCaseName: this.kebabCaseName,
 				buildFormat: this.buildFormat,
 				componentName: this.componentName,
 				testEnviroment: this.testEnviroment,
 				repoName: this.repoName,
-				repoOwner: this.repoOwner,
-				repoDescription: this.repoDescription,
 				superClass: this.superClass,
 				templateLanguage: this.templateLanguage
 			}
@@ -201,6 +154,6 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	install: function () {
-		this.npmInstall();
+		this.yarnInstall();
 	}
 });
