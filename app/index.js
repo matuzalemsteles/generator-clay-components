@@ -107,7 +107,7 @@ module.exports = yeoman.generators.Base.extend({
 
 			this.testEnviroment = props.testEnviroment;
 			this.isNodeModule = props.isNodeModule;
-			this.repoName = 'clay-' + this.kebabCaseName;
+			this.repoName = this.kebabCaseName;
 			this.repoOwner = props.repoOwner;
 			this.repoDescription = props.repoDescription;
 			this.buildFormat = props.buildFormat;
