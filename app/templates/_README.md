@@ -1,6 +1,6 @@
-# <%= repoName %>
+# clay-<%= repoName %>
 
-<%= repoDescription %>
+Metal Clay <%= componentName %> component
 
 ## Setup
 

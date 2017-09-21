@@ -87,10 +87,8 @@ module.exports = yeoman.generators.Base.extend({
 		this.fs.copyTpl(
 			this.templatePath(demoTemplateName), this.destinationPath('demos/index.html'),
 			{
-				camelCaseName: this.camelCaseName,
 				componentName: this.componentName,
 				capitalizeName: this.capitalizeName,
-				kebabCaseName: this.kebabCaseName,
 				repoName: this.repoName
 			}
 		);
@@ -99,44 +97,36 @@ module.exports = yeoman.generators.Base.extend({
 				this.templatePath('src/_Boilerplate.soy'), this.destinationPath('src/clay-' + this.repoName + '.soy'),
 				{
 					componentName: this.componentName,
-					kebabCaseName: this.kebabCaseName
+					kebabCaseName: this.kebabCaseName,
 				}
 			);
 		}
 		this.fs.copyTpl(
 			this.templatePath('src/_BoilerplateComponent.js'), this.destinationPath('src/clay-' + this.repoName + '.js'),
 			{
-				buildFormat: this.buildFormat,
+				repoName: this.repoName,
 				componentName: this.componentName,
-				templateLanguage: this.templateLanguage,
-				kebabCaseName: this.kebabCaseName
 			}
 		);
 		this.fs.copyTpl(
 			this.templatePath('src/__tests__/_Boilerplate.js'), this.destinationPath('src/__tests__/clay-' + this.repoName + '.js'),
 			{
 				componentName: this.componentName,
-				testEnviroment: this.testEnviroment
+				testEnviroment: this.testEnviroment,
 			}
 		);
 		this.fs.copyTpl(
 			this.templatePath('_package.json'), this.destinationPath('package.json'),
 			{
-				kebabCaseName: this.kebabCaseName,
-				buildFormat: this.buildFormat,
 				componentName: this.componentName,
-				testEnviroment: this.testEnviroment,
 				repoName: this.repoName,
-				superClass: this.superClass,
-				templateLanguage: this.templateLanguage
 			}
 		);
 		this.fs.copyTpl(
 			this.templatePath('_README.md'), this.destinationPath('README.md'),
 			{
 				repoName: this.repoName,
-				repoDescription: this.repoDescription,
-				superClass: this.superClass
+				componentName: this.componentName,
 			}
 		);
 		this.fs.copy(
@@ -145,10 +135,7 @@ module.exports = yeoman.generators.Base.extend({
 		this.fs.copyTpl(
 			this.templatePath('_webpack.config.js'), this.destinationPath('webpack.config.js'),
 			{
-				componentName: this.componentName,
 				kebabCaseName: this.kebabCaseName,
-				buildFormat: this.buildFormat,
-				repoName: this.repoName
 			}
 		);
 	},
