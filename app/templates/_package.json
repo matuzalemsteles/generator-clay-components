@@ -8,9 +8,9 @@
     "node": ">=0.12.0",
     "npm": ">=3.0.0"
   },
-  "main": "lib/clay-<%= repoName %>.js",
-  "esnext:main": "src/clay-<%= repoName %>.js",
-  "jsnext:main": "src/clay-<%= repoName %>.js",
+  "main": "lib/Clay<%= componentName %>.js",
+  "esnext:main": "src/Clay<%= componentName %>.js",
+  "jsnext:main": "src/Clay<%= componentName %>.js",
   "files": [
     "lib",
     "src",

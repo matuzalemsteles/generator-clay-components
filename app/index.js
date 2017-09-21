@@ -92,27 +92,22 @@ module.exports = yeoman.generators.Base.extend({
 				repoName: this.repoName
 			}
 		);
-		if (this.templateLanguage === 'Soy') {
-			this.fs.copyTpl(
-				this.templatePath('src/_Boilerplate.soy'), this.destinationPath('src/clay-' + this.repoName + '.soy'),
-				{
-					componentName: this.componentName,
-					kebabCaseName: this.kebabCaseName,
-				}
-			);
-		}
 		this.fs.copyTpl(
-			this.templatePath('src/_BoilerplateComponent.js'), this.destinationPath('src/clay-' + this.repoName + '.js'),
+			this.templatePath('src/_Boilerplate.soy'), this.destinationPath('src/Clay' + this.componentName + '.soy'),
 			{
-				repoName: this.repoName,
 				componentName: this.componentName,
 			}
 		);
 		this.fs.copyTpl(
-			this.templatePath('src/__tests__/_Boilerplate.js'), this.destinationPath('src/__tests__/clay-' + this.repoName + '.js'),
+			this.templatePath('src/_BoilerplateComponent.js'), this.destinationPath('src/Clay' + this.componentName + '.js'),
 			{
 				componentName: this.componentName,
-				testEnviroment: this.testEnviroment,
+			}
+		);
+		this.fs.copyTpl(
+			this.templatePath('src/__tests__/_Boilerplate.js'), this.destinationPath('src/__tests__/Clay' + this.componentName + '.js'),
+			{
+				componentName: this.componentName,
 			}
 		);
 		this.fs.copyTpl(
@@ -135,12 +130,12 @@ module.exports = yeoman.generators.Base.extend({
 		this.fs.copyTpl(
 			this.templatePath('_webpack.config.js'), this.destinationPath('webpack.config.js'),
 			{
-				kebabCaseName: this.kebabCaseName,
+				componentName: this.componentName,
 			}
 		);
 	},
 
 	install: function () {
-		this.yarnInstall();
+		this.spawnCommand('yarn', ['install']);
 	}
 });

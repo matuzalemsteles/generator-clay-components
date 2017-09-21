@@ -1,6 +1,6 @@
 'use strict';
 
-import templates from './clay-<%= repoName %>.soy.js';
+import templates from './Clay<%= componentName %>.soy.js';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
