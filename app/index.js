@@ -32,33 +32,6 @@ module.exports = yeoman.generators.Base.extend({
 
 				return true;
 			}
-		},
-		{
-			type: 'list',
-			name: 'buildFormat',
-			message: 'Which build format will this component use?',
-			choices: ['globals'],
-			default: 'globals',
-			validate: function(input) {
-				if (!input) {
-					return 'You must provide the Metal component build format.';
-				}
-
-				return true;
-			}
-		},
-		{
-			type: 'list',
-			name: 'testEnviroment',
-			message: 'Which test enviroment do you want to use?',
-			choices: ['Jest'],
-			default: 'Jest'
-		},
-		{
-			type: 'confirm',
-			name: 'isNodeModule',
-			message: 'Is this component supposed to run on node environment? (that is, should other modules be able to "require" and use it?)',
-			default: false
 		}];
 
 		this.prompt(prompts, function (props) {
